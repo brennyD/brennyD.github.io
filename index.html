@@ -13076,7 +13076,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[127]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
@@ -13085,6 +13085,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">time</span> 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
 <span class="c1">#from google.colab import drive</span>
 <span class="c1">#from google.colab import files</span>
@@ -14447,7 +14448,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="prompt input_prompt">In&nbsp;[242]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Forming the column data into a 546x2 matrix</span>
@@ -14474,7 +14475,7 @@ or combined-print-and-e-book-fiction) </li>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Model accuracy of 68.18181818181817
+<pre>Model accuracy of 64.54545454545455
 </pre>
 </div>
 </div>
@@ -14501,7 +14502,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[262]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_g</span> <span class="o">=</span> <span class="n">nyt</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;genres&quot;</span><span class="p">])</span>
@@ -14531,7 +14532,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[86]:</div>
+    <div class="prompt output_prompt">Out[262]:</div>
 
 
 
@@ -14636,7 +14637,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[263]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -14652,7 +14653,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[87]:</div>
+    <div class="prompt output_prompt">Out[263]:</div>
 
 
 
@@ -14685,7 +14686,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[264]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres</span> <span class="o">=</span> <span class="n">genres</span><span class="p">[</span><span class="n">genres</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">]</span>
@@ -14702,7 +14703,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[88]:</div>
+    <div class="prompt output_prompt">Out[264]:</div>
 
 
 
@@ -14846,7 +14847,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[265]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bar</span> <span class="o">=</span> <span class="n">genres</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span><span class="s2">&quot;Genre&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -14891,7 +14892,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[103]:</div>
+<div class="prompt input_prompt">In&nbsp;[266]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genre_pages</span> <span class="o">=</span> <span class="p">{}</span>
@@ -14921,7 +14922,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[103]:</div>
+    <div class="prompt output_prompt">Out[266]:</div>
 
 
 
@@ -15027,7 +15028,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="prompt input_prompt">In&nbsp;[267]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres_total</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -15043,7 +15044,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[104]:</div>
+    <div class="prompt output_prompt">Out[267]:</div>
 
 
 
@@ -15123,7 +15124,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[116]:</div>
+<div class="prompt input_prompt">In&nbsp;[268]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres_total</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">);</span>
@@ -15166,7 +15167,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[123]:</div>
+<div class="prompt input_prompt">In&nbsp;[269]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pc</span> <span class="o">=</span> <span class="n">genres_total</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;genre&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">);</span>
@@ -15205,6 +15206,481 @@ Name: Count, dtype: float64</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To little surprise New York Times bestselling books on politics, internation studies, and history contribute the highest page counts</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Genre-prediction">Genre prediction<a class="anchor-link" href="#Genre-prediction">&#182;</a></h2><p>Now that we have some data on genres, can we predict the genre of a book based on some of the parameters on the dataset? We will use a random forest classifier to find out!</p>
+<p>Since our genre data comes in the form of an array, we want to extract the most 'popular' (frequently occuring) genre in that list and append a column to each row containing that specific genre. Luckily, we already have a dictionary containing that very information! All we do is select the genre with the highest frequency for each row</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[270]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">extract_max</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">max_genre</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">genre_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">genre_map</span><span class="p">[</span><span class="n">max_genre</span><span class="p">]:</span>
+            <span class="n">max_genre</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">max_genre</span>
+
+<span class="n">nyt_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">nyt_g</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="p">[</span><span class="s2">&quot;genres&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">extract_max</span><span class="p">)</span>
+<span class="n">nyt_g</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[270]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Rank_List</th>
+      <th>Weeks_On_List</th>
+      <th>ISBN13</th>
+      <th>Publisher</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Contributor</th>
+      <th>Dates</th>
+      <th>Book_Type</th>
+      <th>genres</th>
+      <th>publisher_location</th>
+      <th>page_count</th>
+      <th>OL_title</th>
+      <th>max_rank</th>
+      <th>max_genre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>[1, 2, 3, 9, 11, 15]</td>
+      <td>12</td>
+      <td>9780060899226</td>
+      <td>Ecco</td>
+      <td>KITCHEN CONFIDENTIAL</td>
+      <td>Anthony Bourdain</td>
+      <td>by Anthony Bourdain</td>
+      <td>[2018-06-25, 2018-06-26, 2018-06-27, 2018-06-2...</td>
+      <td>0</td>
+      <td>[Cooks, Accessible book, In library, Cocineros...</td>
+      <td>New York</td>
+      <td>312.0</td>
+      <td>Kitchen confidential</td>
+      <td>1</td>
+      <td>Biography</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>[6]</td>
+      <td>1</td>
+      <td>9780061998065</td>
+      <td>HarperCollins</td>
+      <td>MEDIUM RAW</td>
+      <td>Anthony Bourdain</td>
+      <td>by Anthony Bourdain</td>
+      <td>[2018-07-09, 2018-07-10, 2018-07-11, 2018-07-1...</td>
+      <td>0</td>
+      <td>[nyt:paperback_nonfiction=2011-04-30, Nonficti...</td>
+      <td>New York</td>
+      <td>NaN</td>
+      <td>Medium Raw</td>
+      <td>6</td>
+      <td>Biography</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>[3, 4, 5, 8, 11, 13, 14]</td>
+      <td>8</td>
+      <td>9780062294449</td>
+      <td>Harper</td>
+      <td>THE NEXT PERSON YOU MEET IN HEAVEN</td>
+      <td>Mitch Albom</td>
+      <td>by Mitch Albom</td>
+      <td>[2018-10-22, 2018-10-23, 2018-10-24, 2018-10-2...</td>
+      <td>1</td>
+      <td>[Amusement rides, Heaven, Older men, Death, Fu...</td>
+      <td>None</td>
+      <td>213.0</td>
+      <td>The next person you meet in Heaven</td>
+      <td>3</td>
+      <td>Fiction</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>[3, 6, 11, 12, 13, 14, 15]</td>
+      <td>85</td>
+      <td>9780062300553</td>
+      <td>HarperCollins</td>
+      <td>HILLBILLY ELEGY</td>
+      <td>JD Vance</td>
+      <td>by J.D. Vance</td>
+      <td>[2018-05-14, 2018-05-15, 2018-05-16, 2018-05-1...</td>
+      <td>0</td>
+      <td>[Mountain people, Family, Social mobility, Wor...</td>
+      <td>None</td>
+      <td>288.0</td>
+      <td>Hillbilly Elegy</td>
+      <td>3</td>
+      <td>Biography</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>[1, 2, 4, 5, 7, 9, 12, 14, 15]</td>
+      <td>15</td>
+      <td>9780062319784</td>
+      <td>Harper</td>
+      <td>I'LL BE GONE IN THE DARK</td>
+      <td>Michelle McNamara</td>
+      <td>by Michelle McNamara</td>
+      <td>[2018-03-12, 2018-03-13, 2018-03-14, 2018-03-1...</td>
+      <td>0</td>
+      <td>[Serial murders, Case studies, Serial murder i...</td>
+      <td>USA</td>
+      <td>352.0</td>
+      <td>I'll Be Gone in the Dark</td>
+      <td>1</td>
+      <td>Case studies</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have a singular output designated for each book, we can now form a model to (attempt) to classify the kind of book it is.</p>
+<p>For the input, we want the publisher to be taken into account in the decision trees that are generated. Now, since this is a set of decision trees, it does not really matter if we use ordinal variables to differentiate between publishers, so we can set each publisher to a unique numeric value.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[271]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">publishers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt_g</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Publisher&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">publisher_value</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">publishers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">publishers</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that a unqique id has been set for every publisher, we can include it in our training data</p>
+<p>For this random forest, we will use a forest of 100 trees, with the number of weeks on list, highest rank, book type, and publisher will all be inputs, and the most popular genre will be the output</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[272]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">gx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Weeks_On_List&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_rank&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">],</span> \
+                                 <span class="n">publisher_value</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Publisher&quot;</span><span class="p">]]],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">gy</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[272]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>49.01960784313725</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Well that accuracy isn't meaningless, but no better than a coin toss. Could results improve if, similar to our previous analysis, we only include more commonly assigned genres?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[276]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_pop_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">genre_map</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">nyt_pop_g</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[276]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Rank_List</th>
+      <th>Weeks_On_List</th>
+      <th>ISBN13</th>
+      <th>Publisher</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Contributor</th>
+      <th>Dates</th>
+      <th>Book_Type</th>
+      <th>genres</th>
+      <th>publisher_location</th>
+      <th>page_count</th>
+      <th>OL_title</th>
+      <th>max_rank</th>
+      <th>max_genre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>[1, 2, 3, 9, 11, 15]</td>
+      <td>12.0</td>
+      <td>9780060899226</td>
+      <td>Ecco</td>
+      <td>KITCHEN CONFIDENTIAL</td>
+      <td>Anthony Bourdain</td>
+      <td>by Anthony Bourdain</td>
+      <td>[2018-06-25, 2018-06-26, 2018-06-27, 2018-06-2...</td>
+      <td>0.0</td>
+      <td>[Cooks, Accessible book, In library, Cocineros...</td>
+      <td>New York</td>
+      <td>312.0</td>
+      <td>Kitchen confidential</td>
+      <td>1.0</td>
+      <td>Biography</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>[1, 2, 4, 5, 7, 9, 12, 14, 15]</td>
+      <td>15.0</td>
+      <td>9780062319784</td>
+      <td>Harper</td>
+      <td>I'LL BE GONE IN THE DARK</td>
+      <td>Michelle McNamara</td>
+      <td>by Michelle McNamara</td>
+      <td>[2018-03-12, 2018-03-13, 2018-03-14, 2018-03-1...</td>
+      <td>0.0</td>
+      <td>[Serial murders, Case studies, Serial murder i...</td>
+      <td>USA</td>
+      <td>352.0</td>
+      <td>I'll Be Gone in the Dark</td>
+      <td>1.0</td>
+      <td>Case studies</td>
+    </tr>
+    <tr>
+      <td>54</td>
+      <td>[1, 2, 6, 7, 13]</td>
+      <td>5.0</td>
+      <td>9780062802187</td>
+      <td>Harper</td>
+      <td>FASCISM: A Warning</td>
+      <td>Madeleine Albright with Bill Woodward</td>
+      <td>by Madeleine Albright with Bill Woodward</td>
+      <td>[2018-04-23, 2018-04-24, 2018-04-25, 2018-04-2...</td>
+      <td>0.0</td>
+      <td>[Fascism, History]</td>
+      <td>New York, NY</td>
+      <td>288.0</td>
+      <td>Fascism</td>
+      <td>1.0</td>
+      <td>History</td>
+    </tr>
+    <tr>
+      <td>110</td>
+      <td>[15]</td>
+      <td>2.0</td>
+      <td>9780316556330</td>
+      <td>Little, Brown</td>
+      <td>CIRCE</td>
+      <td>Madeline Miller</td>
+      <td>by Madeline Miller</td>
+      <td>[2018-07-09, 2018-07-10, 2018-07-11, 2018-07-1...</td>
+      <td>1.0</td>
+      <td>[Fantasy, Mythology, Historical Fiction, Retel...</td>
+      <td>New York, USA</td>
+      <td>400.0</td>
+      <td>CIRCE</td>
+      <td>15.0</td>
+      <td>Fiction</td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td>[3, 6, 7, 8, 9, 10, 14]</td>
+      <td>41.0</td>
+      <td>9780385534246</td>
+      <td>Doubleday</td>
+      <td>KILLERS OF THE FLOWER MOON</td>
+      <td>David Grann</td>
+      <td>by David Grann</td>
+      <td>[2018-01-01, 2018-01-02, 2018-01-03, 2018-01-0...</td>
+      <td>0.0</td>
+      <td>[Case studies, United States. Federal Bureau o...</td>
+      <td>New York</td>
+      <td>338.0</td>
+      <td>Killers of the Flower Moon</td>
+      <td>3.0</td>
+      <td>History</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we narrowed our options to things a little more consistent, we can repeat the above steps and rebuild our random forest</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[279]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">gx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt_pop_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Weeks_On_List&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_rank&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">],</span> \
+                                 <span class="n">publisher_value</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Publisher&quot;</span><span class="p">]]],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">gy</span> <span class="o">=</span> <span class="n">nyt_pop_g</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[279]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>75.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By eliminating niche genres, we were able to bump our accuracy reading by &gt;10%! Not bad!</p>
 
 </div>
 </div>
