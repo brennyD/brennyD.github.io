@@ -13078,13 +13078,20 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="The-Basics-of-Book-Bias">The Basics of Book Bias<a class="anchor-link" href="#The-Basics-of-Book-Bias">&#182;</a></h1><h2 id="Analyzing-trends-of-bestselling-books-on-different-platforms">Analyzing trends of bestselling books on different platforms<a class="anchor-link" href="#Analyzing-trends-of-bestselling-books-on-different-platforms">&#182;</a></h2><p>Gesna Aggarwal, Brendan DeMilt, Lydia Hu</p>
+<p>Contents:</p>
+<ul>
+<li>### <a href="#Part-1:-Data-Gathering">Data Gathering</a>  </li>
+<li>### <a href="#Part-2:-Data-Cleaning-and-Management">Data Cleaning and Management</a>  </li>
+<li>### <a href="#Part-3:-Data-Analysis">Data Analysis</a>  </li>
+<li>### <a href="#Part-4:-Hypothesis-Testing-and-ML">Hypothesis Testing and ML</a>  </li>
+</ul>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[127]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
@@ -13103,6 +13110,13 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Part-1:-Data-Gathering">Part 1: Data Gathering<a class="anchor-link" href="#Part-1:-Data-Gathering">&#182;</a></h1>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -13266,7 +13280,290 @@ Mounted at drive
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="New-York-Times---Data-Cleaning">New York Times - Data Cleaning<a class="anchor-link" href="#New-York-Times---Data-Cleaning">&#182;</a></h1><p>As mentioned before, we uploaded our code in the form of a .csv file. The original New York Times dataframe had many columns we would not need in our analysis. So before grouping our data by ISBNs, we dropped many columns and kept the following eight:</p>
+<h2 id="Goodreads-API">Goodreads API<a class="anchor-link" href="#Goodreads-API">&#182;</a></h2><p>Goodreads is a social website for readers owned by Amazon, allowing them to track, organize, rate, and interact with friends and authors to collaborate in groups and lists to discuss books. So addition to expected data about books (ISBN, publication date), Goodreads contains data about how readers of a book interact with each other. Goodreads is different from Amazon, NYT, and publishers' sites because it crowdsources some of its information. For instance, the genre of a book depends on how users personally categorize the book in their shelves. Goodreads also allows readers to add metadata about a book (some subjective), for instance, its tone, pace, literary devices used.</p>
+<p>Goodreads uses its own book IDs in addition to having ISBNs. Some of the categorization ambiguities with this system are that different editions of a book will have different ISBNs, like a collector's edition, a movie-tie edition, a signed edition, etc. Goodreads would then have a separate entry for each of these editions and users can go in and separately review each of these editions. This makes it so there's not really one immediately available source of truth for how Goodreads users feel about a book because of how many editions there might be reviewed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gr_key</span> <span class="o">=</span> <span class="s1">&#39;LR4gZ9vJHllxG6Xfp8eKnQ&#39;</span>
+
+<span class="n">best_of_18</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0062498533,1501173219,1619635194,0425232204,1250080401,0553418025,0307588378,0062459368,0545586178&#39;</span><span class="p">]</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">gr_key</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;isbns&#39;</span><span class="p">,</span> <span class="n">best_of_18</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;format&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">review_request</span> <span class="o">=</span> <span class="s1">&#39;https://www.goodreads.com/book/review_counts.json&#39;</span>
+<span class="n">goodreads_result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">review_request</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+<span class="n">gr_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">goodreads_result</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;books&quot;</span><span class="p">])</span>
+<span class="n">gr_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[36]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isbn</th>
+      <th>isbn13</th>
+      <th>ratings_count</th>
+      <th>reviews_count</th>
+      <th>text_reviews_count</th>
+      <th>work_ratings_count</th>
+      <th>work_reviews_count</th>
+      <th>work_text_reviews_count</th>
+      <th>average_rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>32075671</td>
+      <td>0062498533</td>
+      <td>9780062498533</td>
+      <td>294760</td>
+      <td>67183</td>
+      <td>37484</td>
+      <td>370587</td>
+      <td>69167</td>
+      <td>48473</td>
+      <td>4.52</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>34006942</td>
+      <td>1501173219</td>
+      <td>9781501173219</td>
+      <td>3141</td>
+      <td>8676</td>
+      <td>432</td>
+      <td>867079</td>
+      <td>1835157</td>
+      <td>69571</td>
+      <td>4.33</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>31451175</td>
+      <td>1619635194</td>
+      <td>9781619635197</td>
+      <td>1023</td>
+      <td>1634</td>
+      <td>159</td>
+      <td>251808</td>
+      <td>435208</td>
+      <td>33877</td>
+      <td>4.66</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>6588662</td>
+      <td>0425232204</td>
+      <td>9780425232200</td>
+      <td>9577</td>
+      <td>16502</td>
+      <td>1210</td>
+      <td>1946751</td>
+      <td>2716975</td>
+      <td>82607</td>
+      <td>4.47</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>25587463</td>
+      <td>1250080401</td>
+      <td>9781250080400</td>
+      <td>5449</td>
+      <td>3196</td>
+      <td>837</td>
+      <td>565518</td>
+      <td>948739</td>
+      <td>56016</td>
+      <td>4.57</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>44334843</td>
+      <td>0307588378</td>
+      <td>9780307588371</td>
+      <td>323</td>
+      <td>628</td>
+      <td>15</td>
+      <td>2073703</td>
+      <td>3091016</td>
+      <td>129224</td>
+      <td>4.06</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>27161228</td>
+      <td>0062459368</td>
+      <td>9780062459367</td>
+      <td>970</td>
+      <td>1504</td>
+      <td>116</td>
+      <td>438433</td>
+      <td>857714</td>
+      <td>44886</td>
+      <td>4.00</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>16280929</td>
+      <td>0545586178</td>
+      <td>9780545586177</td>
+      <td>2379</td>
+      <td>177</td>
+      <td>123</td>
+      <td>2260903</td>
+      <td>2720854</td>
+      <td>92608</td>
+      <td>4.29</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="OpenLibrary-API">OpenLibrary API<a class="anchor-link" href="#OpenLibrary-API">&#182;</a></h2><p>Since both of these datasets do not contain all of the data we need, we need to find another source of information to fill out details on these books. One such resource we are utilizing is Open Library, which is an open source library....library whose mission is to catalog the world's books, which is super useful for our needs. Therefore, we wrote a few helper methods using the Open Library API to help add standardized information to the data we already have for both tables</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">OL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openlibrary.org/api/books&quot;</span>
+
+<span class="k">def</span> <span class="nf">fetch_book</span><span class="p">(</span><span class="n">isbn</span><span class="p">):</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">OL_BASE</span><span class="o">+</span><span class="s2">&quot;?bibkeys=ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">isbn</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;&amp;jscmd=data&amp;format=json&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">test</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">isbn</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">fetch_batch</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;,&quot;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">OL_BASE</span><span class="o">+</span><span class="s2">&quot;?bibkeys=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;&amp;jscmd=data&amp;format=json&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">continue</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">fetch_batch_subsection</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">subtitle</span><span class="p">):</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="n">fetch_batch</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">book</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sections</span> <span class="o">=</span> <span class="n">book</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">subtitle</span><span class="p">]</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">continue</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+<span class="k">def</span> <span class="nf">fetch_batch_section</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="n">fetch_batch</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">books</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">title</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">continue</span>
+    <span class="k">return</span> <span class="n">ret</span>
+    
+<span class="k">def</span> <span class="nf">get_genres</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fetch_batch_subsection</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span><span class="s2">&quot;subjects&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_titles</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fetch_batch_section</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_publishers</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fetch_batch_subsection</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span><span class="s2">&quot;publishers&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_publisher_locations</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fetch_batch_subsection</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span><span class="s2">&quot;publish_places&quot;</span><span class="p">)</span>
+     
+<span class="k">def</span> <span class="nf">get_page_counts</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fetch_batch_section</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span> <span class="s2">&quot;number_of_pages&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_publish_date</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fetch_batch_section</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span> <span class="s2">&quot;publish_date&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Part-2:-Data-Cleaning-and-Management">Part 2: Data Cleaning and Management<a class="anchor-link" href="#Part-2:-Data-Cleaning-and-Management">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="New-York-Times---Data-Cleaning">New York Times - Data Cleaning<a class="anchor-link" href="#New-York-Times---Data-Cleaning">&#182;</a></h2><p>As mentioned before, we uploaded our code in the form of a .csv file. The original New York Times dataframe had many columns we would not need in our analysis. So before grouping our data by ISBNs, we dropped many columns and kept the following eight:</p>
 <ol>
 <li>Rank_List = A list of all the ranks the book has had on the bestseller list. </li>
 <li>Weeks_On_List = Total number of weeks the book has been on the bestseller list. </li>
@@ -13285,7 +13582,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data2.csv&#39;</span><span class="p">)</span>
@@ -13336,7 +13633,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[82]:</div>
+    <div class="prompt output_prompt">Out[38]:</div>
 
 
 
@@ -13505,283 +13802,7 @@ or combined-print-and-e-book-fiction) </li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Goodreads-API">Goodreads API<a class="anchor-link" href="#Goodreads-API">&#182;</a></h1><p>Goodreads is a social website for readers owned by Amazon, allowing them to track, organize, rate, and interact with friends and authors to collaborate in groups and lists to discuss books. So addition to expected data about books (ISBN, publication date), Goodreads contains data about how readers of a book interact with each other. Goodreads is different from Amazon, NYT, and publishers' sites because it crowdsources some of its information. For instance, the genre of a book depends on how users personally categorize the book in their shelves. Goodreads also allows readers to add metadata about a book (some subjective), for instance, its tone, pace, literary devices used.</p>
-<p>Goodreads uses its own book IDs in addition to having ISBNs. Some of the categorization ambiguities with this system are that different editions of a book will have different ISBNs, like a collector's edition, a movie-tie edition, a signed edition, etc. Goodreads would then have a separate entry for each of these editions and users can go in and separately review each of these editions. This makes it so there's not really one immediately available source of truth for how Goodreads users feel about a book because of how many editions there might be reviewed.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gr_key</span> <span class="o">=</span> <span class="s1">&#39;LR4gZ9vJHllxG6Xfp8eKnQ&#39;</span>
-
-<span class="n">best_of_18</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0062498533,1501173219,1619635194,0425232204,1250080401,0553418025,0307588378,0062459368,0545586178&#39;</span><span class="p">]</span>
-
-<span class="n">params</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">gr_key</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;isbns&#39;</span><span class="p">,</span> <span class="n">best_of_18</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;format&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="n">review_request</span> <span class="o">=</span> <span class="s1">&#39;https://www.goodreads.com/book/review_counts.json&#39;</span>
-<span class="n">goodreads_result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">review_request</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-
-<span class="n">gr_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">goodreads_result</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;books&quot;</span><span class="p">])</span>
-<span class="n">gr_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[4]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>isbn</th>
-      <th>isbn13</th>
-      <th>ratings_count</th>
-      <th>reviews_count</th>
-      <th>text_reviews_count</th>
-      <th>work_ratings_count</th>
-      <th>work_reviews_count</th>
-      <th>work_text_reviews_count</th>
-      <th>average_rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>32075671</td>
-      <td>0062498533</td>
-      <td>9780062498533</td>
-      <td>294679</td>
-      <td>67012</td>
-      <td>37470</td>
-      <td>370499</td>
-      <td>68982</td>
-      <td>48460</td>
-      <td>4.52</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>34006942</td>
-      <td>1501173219</td>
-      <td>9781501173219</td>
-      <td>3141</td>
-      <td>8672</td>
-      <td>432</td>
-      <td>866930</td>
-      <td>1834856</td>
-      <td>69565</td>
-      <td>4.33</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>31451175</td>
-      <td>1619635194</td>
-      <td>9781619635197</td>
-      <td>1022</td>
-      <td>1634</td>
-      <td>159</td>
-      <td>251754</td>
-      <td>435130</td>
-      <td>33871</td>
-      <td>4.66</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>6588662</td>
-      <td>0425232204</td>
-      <td>9780425232200</td>
-      <td>9577</td>
-      <td>16503</td>
-      <td>1210</td>
-      <td>1946514</td>
-      <td>2716640</td>
-      <td>82604</td>
-      <td>4.47</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>25587463</td>
-      <td>1250080401</td>
-      <td>9781250080400</td>
-      <td>5447</td>
-      <td>3193</td>
-      <td>837</td>
-      <td>565393</td>
-      <td>948519</td>
-      <td>56011</td>
-      <td>4.57</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>44334843</td>
-      <td>0307588378</td>
-      <td>9780307588371</td>
-      <td>322</td>
-      <td>627</td>
-      <td>15</td>
-      <td>2073437</td>
-      <td>3090584</td>
-      <td>129221</td>
-      <td>4.06</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>27161228</td>
-      <td>0062459368</td>
-      <td>9780062459367</td>
-      <td>969</td>
-      <td>1502</td>
-      <td>116</td>
-      <td>438385</td>
-      <td>857627</td>
-      <td>44884</td>
-      <td>4.00</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>16280929</td>
-      <td>0545586178</td>
-      <td>9780545586177</td>
-      <td>2378</td>
-      <td>176</td>
-      <td>123</td>
-      <td>2260669</td>
-      <td>2720527</td>
-      <td>92606</td>
-      <td>4.29</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="OpenLibrary-API">OpenLibrary API<a class="anchor-link" href="#OpenLibrary-API">&#182;</a></h1><p>Since both of these datasets do not contain all of the data we need, we need to find another source of information to fill out details on these books. One such resource we are utilizing is Open Library, which is an open source library....library whose mission is to catalog the world's books, which is super useful for our needs. Therefore, we wrote a few helper methods using the Open Library API to help add standardized information to the data we already have for both tables</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">OL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openlibrary.org/api/books&quot;</span>
-
-<span class="k">def</span> <span class="nf">fetch_book</span><span class="p">(</span><span class="n">isbn</span><span class="p">):</span>
-    <span class="n">test</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">OL_BASE</span><span class="o">+</span><span class="s2">&quot;?bibkeys=ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">isbn</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;&amp;jscmd=data&amp;format=json&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">test</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">isbn</span><span class="p">)]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-<span class="k">def</span> <span class="nf">fetch_batch</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
-        <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;,&quot;</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">test</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">OL_BASE</span><span class="o">+</span><span class="s2">&quot;?bibkeys=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;&amp;jscmd=data&amp;format=json&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;ISBN:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                <span class="k">continue</span>
-        <span class="k">return</span> <span class="n">ret</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-<span class="k">def</span> <span class="nf">fetch_batch_subsection</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">subtitle</span><span class="p">):</span>
-    <span class="n">book</span> <span class="o">=</span> <span class="n">fetch_batch</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">book</span><span class="p">)):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">sections</span> <span class="o">=</span> <span class="n">book</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">subtitle</span><span class="p">]</span>
-            <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">]</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">continue</span>
-    <span class="k">return</span> <span class="n">ret</span>
-
-<span class="k">def</span> <span class="nf">fetch_batch_section</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-    <span class="n">books</span> <span class="o">=</span> <span class="n">fetch_batch</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">books</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">title</span><span class="p">]</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">continue</span>
-    <span class="k">return</span> <span class="n">ret</span>
-    
-<span class="k">def</span> <span class="nf">get_genres</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">fetch_batch_subsection</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span><span class="s2">&quot;subjects&quot;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">get_titles</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">fetch_batch_section</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">get_publishers</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">fetch_batch_subsection</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span><span class="s2">&quot;publishers&quot;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">get_publisher_locations</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">fetch_batch_subsection</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span><span class="s2">&quot;publish_places&quot;</span><span class="p">)</span>
-     
-<span class="k">def</span> <span class="nf">get_page_counts</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">fetch_batch_section</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span> <span class="s2">&quot;number_of_pages&quot;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">get_publish_date</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">fetch_batch_section</span><span class="p">(</span><span class="n">isbn_arr</span><span class="p">,</span> <span class="s2">&quot;publish_date&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The Goodreads API call provides a bunch of user generated data for it's top rated books. However a lot of this data we don't need, so we will be dropping all columns except for:</p>
+<h2 id="Appending-Goodreads-Data">Appending Goodreads Data<a class="anchor-link" href="#Appending-Goodreads-Data">&#182;</a></h2><p>The Goodreads API call provides a bunch of user generated data for it's top rated books. However a lot of this data we don't need, so we will be dropping all columns except for:</p>
 <ul>
 <li><strong>isbn:</strong> to connect to Open Library</li>
 <li><strong>work_ratings_count</strong>: total number of user star ratings without text review</li>
@@ -13794,7 +13815,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">gr_data</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[[</span><span class="s2">&quot;isbn&quot;</span><span class="p">,</span> <span class="s2">&quot;work_ratings_count&quot;</span><span class="p">,</span> <span class="s2">&quot;work_text_reviews_count&quot;</span><span class="p">,</span> <span class="s2">&quot;average_rating&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -13815,7 +13836,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">isbn_arr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">gr_data</span><span class="p">[</span><span class="s2">&quot;isbn&quot;</span><span class="p">])</span>
@@ -13838,7 +13859,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[40]:</div>
 
 
 
@@ -13877,8 +13898,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>0</td>
       <td>0062498533</td>
-      <td>370499</td>
-      <td>48460</td>
+      <td>370587</td>
+      <td>48473</td>
       <td>4.52</td>
       <td>The Hate U Give</td>
       <td>[Fiction, National Book Awards Longlist, Race ...</td>
@@ -13890,8 +13911,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>1</td>
       <td>1501173219</td>
-      <td>866930</td>
-      <td>69565</td>
+      <td>867079</td>
+      <td>69571</td>
       <td>4.33</td>
       <td>All the Light We Cannot See: A Novel</td>
       <td>None</td>
@@ -13903,8 +13924,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>2</td>
       <td>1619635194</td>
-      <td>251754</td>
-      <td>33871</td>
+      <td>251808</td>
+      <td>33877</td>
       <td>4.66</td>
       <td>None</td>
       <td>None</td>
@@ -13916,8 +13937,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>3</td>
       <td>0425232204</td>
-      <td>1946514</td>
-      <td>82604</td>
+      <td>1946751</td>
+      <td>82607</td>
       <td>4.47</td>
       <td>The Help</td>
       <td>[novels, Fiction, Civil rights movements, Hous...</td>
@@ -13929,8 +13950,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>4</td>
       <td>1250080401</td>
-      <td>565393</td>
-      <td>56011</td>
+      <td>565518</td>
+      <td>56016</td>
       <td>4.57</td>
       <td>The Nightingale: A Novel</td>
       <td>None</td>
@@ -13942,8 +13963,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>5</td>
       <td>0307588378</td>
-      <td>2073437</td>
-      <td>129221</td>
+      <td>2073703</td>
+      <td>129224</td>
       <td>4.06</td>
       <td>Gone Girl</td>
       <td>[mystery fiction, suspense fiction, Detective ...</td>
@@ -13955,8 +13976,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>6</td>
       <td>0062459368</td>
-      <td>438385</td>
-      <td>44884</td>
+      <td>438433</td>
+      <td>44886</td>
       <td>4.00</td>
       <td>None</td>
       <td>None</td>
@@ -13968,8 +13989,8 @@ or combined-print-and-e-book-fiction) </li>
     <tr>
       <td>7</td>
       <td>0545586178</td>
-      <td>2260669</td>
-      <td>92606</td>
+      <td>2260903</td>
+      <td>92608</td>
       <td>4.29</td>
       <td>Catching Fire</td>
       <td>[Action/Adventure, fantasy, teen fiction, juve...</td>
@@ -13992,14 +14013,14 @@ or combined-print-and-e-book-fiction) </li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We will now add the same columns to the New York Times dataset that it doesn't already have. This way, when it comes time to compare the two, we have standard data to work with. The only difference with this process is that, instead of using isbn10 to gather data, we will be calling OpenLibrary with the isbn13 number, as fewer books have an isbn10 number in the New York Times dataset. The Open Library API limits each call to have about 200 isbns each, so we're going to have to make 3 calls to get all the data for each column</p>
+<h2 id="Appending-New-York-Times-Data">Appending New York Times Data<a class="anchor-link" href="#Appending-New-York-Times-Data">&#182;</a></h2><p>We will now add the same columns to the New York Times dataset that it doesn't already have. This way, when it comes time to compare the two, we have standard data to work with. The only difference with this process is that, instead of using isbn10 to gather data, we will be calling OpenLibrary with the isbn13 number, as fewer books have an isbn10 number in the New York Times dataset. The Open Library API limits each call to have about 200 isbns each, so we're going to have to make 3 calls to get all the data for each column</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt</span> <span class="o">=</span> <span class="n">finalDataFrame</span>
@@ -14030,7 +14051,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[84]:</div>
+    <div class="prompt output_prompt">Out[41]:</div>
 
 
 
@@ -14170,7 +14191,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nyt</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;combined-print-and-e-book-fiction&quot;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
@@ -14189,7 +14210,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[85]:</div>
+    <div class="prompt output_prompt">Out[42]:</div>
 
 
 
@@ -14328,7 +14349,7 @@ or combined-print-and-e-book-fiction) </li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="New-York-Times-Analysis">New York Times Analysis<a class="anchor-link" href="#New-York-Times-Analysis">&#182;</a></h1><p>Now that we have our data gathered, we can start exploring patterns among the books</p>
+<h1 id="Part-3:-Data-Analysis">Part 3: Data Analysis<a class="anchor-link" href="#Part-3:-Data-Analysis">&#182;</a></h1><p>Now that we have our data gathered, we can start exploring patterns among the books</p>
 <h2 id="Rank-vs-weeks-on-the-list">Rank vs weeks on the list<a class="anchor-link" href="#Rank-vs-weeks-on-the-list">&#182;</a></h2><p>Firstly, we would like to see if there is a noticable parent between the highest rank a book reached during its time on the list and how many weeks it was on the bestsellers list, and we will differentiate between fiction and non-fiction. In order to make the chart more human readable (mitigating the effects of extremes), we will take the average number of weeks for each rank for each type of book.</p>
 
 </div>
@@ -14336,7 +14357,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -14390,7 +14411,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">nyt</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">):</span>
@@ -14413,7 +14434,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[56]:</div>
+    <div class="prompt output_prompt">Out[44]:</div>
 
 
 
@@ -14441,60 +14462,6 @@ or combined-print-and-e-book-fiction) </li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-Prediction-of-Fiction!">The Prediction of Fiction!<a class="anchor-link" href="#The-Prediction-of-Fiction!">&#182;</a></h2><p>Can we use logistic regression classification to see if a book, based on the number of weeks on the bestsellers list, the highest rank it achieved, and the number of ranks it held, is fiction or not? We will use the sklearn library to build a logistic regression model as well as to create testing and training data, and eventually measure the accuracy of the model</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[242]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Forming the column data into a 546x2 matrix</span>
-<span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Rank_List&quot;</span><span class="p">]),</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_rank&quot;</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Weeks_On_List&quot;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">nyt</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">]</span>
-<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">)</span>
-<span class="c1">#Retrieving x and y test data on a 80/20 split</span>
-<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model accuracy of &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Model accuracy of 64.54545454545455
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So, based on the results of this model, it can predict unseen data correctly with between 60-70% accuracy. In the words of a great Chernobyl Engineer: "Not great, not terrible"</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Genre-Analysis">Genre Analysis<a class="anchor-link" href="#Genre-Analysis">&#182;</a></h2><p>Unfortunately, the OpenLibrary API proved to be less than effective, only covering about half of what's on the bestsellers list we generated, nonetheless, that's still over 250 data points to examine, so we will trim the dataset to those with identified genres and examine the makeup of them. We will first generate a map containing all of the occurences of each book genre</p>
 
 </div>
@@ -14502,7 +14469,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[262]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_g</span> <span class="o">=</span> <span class="n">nyt</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;genres&quot;</span><span class="p">])</span>
@@ -14532,7 +14499,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[262]:</div>
+    <div class="prompt output_prompt">Out[45]:</div>
 
 
 
@@ -14637,7 +14604,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[263]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -14653,7 +14620,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[263]:</div>
+    <div class="prompt output_prompt">Out[46]:</div>
 
 
 
@@ -14686,7 +14653,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[264]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres</span> <span class="o">=</span> <span class="n">genres</span><span class="p">[</span><span class="n">genres</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">]</span>
@@ -14703,7 +14670,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[264]:</div>
+    <div class="prompt output_prompt">Out[47]:</div>
 
 
 
@@ -14847,7 +14814,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[265]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bar</span> <span class="o">=</span> <span class="n">genres</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span><span class="s2">&quot;Genre&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -14892,7 +14859,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[266]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genre_pages</span> <span class="o">=</span> <span class="p">{}</span>
@@ -14922,7 +14889,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[266]:</div>
+    <div class="prompt output_prompt">Out[49]:</div>
 
 
 
@@ -15028,7 +14995,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[267]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres_total</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -15044,7 +15011,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[267]:</div>
+    <div class="prompt output_prompt">Out[50]:</div>
 
 
 
@@ -15124,7 +15091,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[268]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres_total</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">);</span>
@@ -15167,7 +15134,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[269]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pc</span> <span class="o">=</span> <span class="n">genres_total</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;genre&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">);</span>
@@ -15213,6 +15180,67 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Part-4:-Hypothesis-Testing-and-ML">Part 4: Hypothesis Testing and ML<a class="anchor-link" href="#Part-4:-Hypothesis-Testing-and-ML">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-Prediction-of-Fiction!">The Prediction of Fiction!<a class="anchor-link" href="#The-Prediction-of-Fiction!">&#182;</a></h2><p>Can we use logistic regression classification to see if a book, based on the number of weeks on the bestsellers list, the highest rank it achieved, and the number of ranks it held, is fiction or not? We will use the sklearn library to build a logistic regression model as well as to create testing and training data, and eventually measure the accuracy of the model</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Forming the column data into a 546x2 matrix</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Rank_List&quot;</span><span class="p">]),</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_rank&quot;</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Weeks_On_List&quot;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">nyt</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">]</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">)</span>
+<span class="c1">#Retrieving x and y test data on a 80/20 split</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model accuracy of &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Model accuracy of 60.909090909090914
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, based on the results of this model, it can predict unseen data correctly with between 60-70% accuracy. In the words of a great Chernobyl Engineer: "Not great, not terrible"</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Genre-prediction">Genre prediction<a class="anchor-link" href="#Genre-prediction">&#182;</a></h2><p>If you were an aspiring New York Times Best Seller, wouldn't you want to know what genre of book to write to hit your target on the charts? Well given the data we have, we can use a random forest classifier to find out the exact genre to get you where you need to be!</p>
 <p>Since our genre data comes in the form of an array, we want to extract the most 'popular' (frequently occuring) genre in that list and append a column to each row containing that specific genre. Luckily, we already have a dictionary containing that very information! All we do is select the genre with the highest frequency for each row</p>
 
@@ -15221,7 +15249,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[270]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">extract_max</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -15246,7 +15274,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[270]:</div>
+    <div class="prompt output_prompt">Out[54]:</div>
 
 
 
@@ -15399,7 +15427,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[271]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">publishers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt_g</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Publisher&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -15423,7 +15451,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[272]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -15446,13 +15474,13 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[272]:</div>
+    <div class="prompt output_prompt">Out[56]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>49.01960784313725</pre>
+<pre>50.98039215686274</pre>
 </div>
 
 </div>
@@ -15471,7 +15499,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[276]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_pop_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">genre_map</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
@@ -15488,7 +15516,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[276]:</div>
+    <div class="prompt output_prompt">Out[57]:</div>
 
 
 
@@ -15640,16 +15668,16 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[279]:</div>
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">gx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt_pop_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Weeks_On_List&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_rank&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">],</span> \
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfpop</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">gx1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt_pop_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Weeks_On_List&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_rank&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">],</span> \
                                  <span class="n">publisher_value</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;Publisher&quot;</span><span class="p">]]],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">gy</span> <span class="o">=</span> <span class="n">nyt_pop_g</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]</span>
-<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
-<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">gy1</span> <span class="o">=</span> <span class="n">nyt_pop_g</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">gx1</span><span class="p">,</span> <span class="n">gy1</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">rfpop</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">rfpop</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
 </pre></div>
 
     </div>
@@ -15662,7 +15690,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[279]:</div>
+    <div class="prompt output_prompt">Out[94]:</div>
 
 
 
