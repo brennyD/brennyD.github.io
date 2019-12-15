@@ -15106,10 +15106,10 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[117]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_pop_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">genre_map</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_pop_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">genre_map</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
 <span class="n">nyt_pop_g</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
@@ -15123,7 +15123,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[77]:</div>
+    <div class="prompt output_prompt">Out[117]:</div>
 
 
 
@@ -15183,6 +15183,60 @@ Name: Count, dtype: float64</pre>
       <td>Biography</td>
     </tr>
     <tr>
+      <td>1</td>
+      <td>[6]</td>
+      <td>1.0</td>
+      <td>9780061998065</td>
+      <td>HarperCollins</td>
+      <td>MEDIUM RAW</td>
+      <td>Anthony Bourdain</td>
+      <td>by Anthony Bourdain</td>
+      <td>[2018-07-09, 2018-07-10, 2018-07-11, 2018-07-1...</td>
+      <td>0.0</td>
+      <td>[nyt:paperback_nonfiction=2011-04-30, Nonficti...</td>
+      <td>New York</td>
+      <td>NaN</td>
+      <td>Medium Raw</td>
+      <td>6.0</td>
+      <td>Biography</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>[3, 4, 5, 8, 11, 13, 14]</td>
+      <td>8.0</td>
+      <td>9780062294449</td>
+      <td>Harper</td>
+      <td>THE NEXT PERSON YOU MEET IN HEAVEN</td>
+      <td>Mitch Albom</td>
+      <td>by Mitch Albom</td>
+      <td>[2018-10-22, 2018-10-23, 2018-10-24, 2018-10-2...</td>
+      <td>1.0</td>
+      <td>[Amusement rides, Heaven, Older men, Death, Fu...</td>
+      <td>None</td>
+      <td>213.0</td>
+      <td>The next person you meet in Heaven</td>
+      <td>3.0</td>
+      <td>Fiction</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>[3, 6, 11, 12, 13, 14, 15]</td>
+      <td>85.0</td>
+      <td>9780062300553</td>
+      <td>HarperCollins</td>
+      <td>HILLBILLY ELEGY</td>
+      <td>JD Vance</td>
+      <td>by J.D. Vance</td>
+      <td>[2018-05-14, 2018-05-15, 2018-05-16, 2018-05-1...</td>
+      <td>0.0</td>
+      <td>[Mountain people, Family, Social mobility, Wor...</td>
+      <td>None</td>
+      <td>288.0</td>
+      <td>Hillbilly Elegy</td>
+      <td>3.0</td>
+      <td>Biography</td>
+    </tr>
+    <tr>
       <td>8</td>
       <td>[1, 2, 4, 5, 7, 9, 12, 14, 15]</td>
       <td>15.0</td>
@@ -15199,60 +15253,6 @@ Name: Count, dtype: float64</pre>
       <td>I'll Be Gone in the Dark</td>
       <td>1.0</td>
       <td>Case studies</td>
-    </tr>
-    <tr>
-      <td>54</td>
-      <td>[1, 2, 6, 7, 13]</td>
-      <td>5.0</td>
-      <td>9780062802187</td>
-      <td>Harper</td>
-      <td>FASCISM: A Warning</td>
-      <td>Madeleine Albright with Bill Woodward</td>
-      <td>by Madeleine Albright with Bill Woodward</td>
-      <td>[2018-04-23, 2018-04-24, 2018-04-25, 2018-04-2...</td>
-      <td>0.0</td>
-      <td>[Fascism, History]</td>
-      <td>New York, NY</td>
-      <td>288.0</td>
-      <td>Fascism</td>
-      <td>1.0</td>
-      <td>History</td>
-    </tr>
-    <tr>
-      <td>110</td>
-      <td>[15]</td>
-      <td>2.0</td>
-      <td>9780316556330</td>
-      <td>Little, Brown</td>
-      <td>CIRCE</td>
-      <td>Madeline Miller</td>
-      <td>by Madeline Miller</td>
-      <td>[2018-07-09, 2018-07-10, 2018-07-11, 2018-07-1...</td>
-      <td>1.0</td>
-      <td>[Fantasy, Mythology, Historical Fiction, Retel...</td>
-      <td>New York, USA</td>
-      <td>400.0</td>
-      <td>CIRCE</td>
-      <td>15.0</td>
-      <td>Fiction</td>
-    </tr>
-    <tr>
-      <td>128</td>
-      <td>[3, 6, 7, 8, 9, 10, 14]</td>
-      <td>41.0</td>
-      <td>9780385534246</td>
-      <td>Doubleday</td>
-      <td>KILLERS OF THE FLOWER MOON</td>
-      <td>David Grann</td>
-      <td>by David Grann</td>
-      <td>[2018-01-01, 2018-01-02, 2018-01-03, 2018-01-0...</td>
-      <td>0.0</td>
-      <td>[Case studies, United States. Federal Bureau o...</td>
-      <td>New York</td>
-      <td>338.0</td>
-      <td>Killers of the Flower Moon</td>
-      <td>3.0</td>
-      <td>History</td>
     </tr>
   </tbody>
 </table>
@@ -15275,7 +15275,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[119]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfpop</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -15297,13 +15297,13 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[84]:</div>
+    <div class="prompt output_prompt">Out[119]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>75.0</pre>
+<pre>65.11627906976744</pre>
 </div>
 
 </div>
