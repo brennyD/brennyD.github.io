@@ -13077,40 +13077,12 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-Basics-of-Book-Bias">The Basics of Book Bias<a class="anchor-link" href="#The-Basics-of-Book-Bias">&#182;</a></h1><h2 id="Analyzing-trends-of-bestselling-books-on-different-platforms">Analyzing trends of bestselling books on different platforms<a class="anchor-link" href="#Analyzing-trends-of-bestselling-books-on-different-platforms">&#182;</a></h2><p>Gesna Aggarwal, Brendan DeMilt, Lydia Hu</p>
-<p>Contents:</p>
-<ul>
-<li><a href="#Part-1:-Data-Gathering">1. Data Gathering</a>  </li>
-<li><a href="#Part-2:-Data-Cleaning-and-Management">2. Data Cleaning and Management</a>  </li>
-<li><a href="#Part-3:-Data-Analysis">3. Data Analysis</a>  </li>
-<li><a href="#Part-4:-Hypothesis-Testing-and-ML">4. Hypothesis Testing and ML</a>  </li>
-<li><a href="#Part-5:-Conclusion">5. Conclusion</a></li>
-</ul>
+<h1 id="Bookbuyer-Behavior-Breakdown">Bookbuyer Behavior Breakdown<a class="anchor-link" href="#Bookbuyer-Behavior-Breakdown">&#182;</a></h1><h2 id="Analyzing-trends-of-bestselling-books-on-different-platforms">Analyzing trends of bestselling books on different platforms<a class="anchor-link" href="#Analyzing-trends-of-bestselling-books-on-different-platforms">&#182;</a></h2><p>Gesna Aggarwal, Brendan DeMilt, Lydia Hu</p>
+<p><img src="https://www.twincities.com/wp-content/uploads/2018/08/fallnationalbooks.jpg" alt="alt text"></p>
+<p>Picture taken from Twin Cities</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">time</span> 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
-<span class="c1">#from google.colab import drive</span>
-<span class="c1">#from google.colab import files</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -13123,6 +13095,14 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The Association of American Publishers reported that the book industry generated roughly $26.23 billion in revenue through 2.72 billion units in 2017. The Bureau of Labor Statistics estimates that there are just under 146,000 writers and authors working in the United States. While books are communicated through different mediums and marketed different ways, the craft of the written word remains fundamental to culture and communication of society.</p>
+<p>Contents:</p>
+<ul>
+<li><a href="#Part-1:-Data-Gathering">1. Data Gathering</a></li>
+<li><a href="#Part-2:-Data-Cleaning-and-Management">2. Data Cleaning and Management</a>  </li>
+<li><a href="#Part-3:-Data-Analysis">3. Data Analysis</a>  </li>
+<li><a href="#Part-4:-Hypothesis-Testing-and-ML">4. Hypothesis Testing and ML</a>  </li>
+<li><a href="#Part-5:-Conclusion">5. Conclusion</a></li>
+</ul>
 
 </div>
 </div>
@@ -13130,7 +13110,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Part-1:-Data-Gathering">Part 1: Data Gathering<a class="anchor-link" href="#Part-1:-Data-Gathering">&#182;</a></h1>
+<h1 id="Part-1:-Data-Gathering">Part 1: Data Gathering<a class="anchor-link" href="#Part-1:-Data-Gathering">&#182;</a></h1><p>We will be using the New York Times API to get the bestseller data and the OpenLibrary API to get additional information on each book.</p>
+
 </div>
 </div>
 </div>
@@ -13153,6 +13134,28 @@ div#notebook {
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">time</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<span class="c1">#from google.colab import drive</span>
+<span class="c1">#from google.colab import files</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -13207,7 +13210,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Mounting google drive to google collaboratory and exporting the pandas dataframe to google drive as a .csv file </span>
@@ -13245,7 +13248,7 @@ Mounted at drive
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#uploading the csv file to google colab </span>
@@ -13296,14 +13299,14 @@ Mounted at drive
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="OpenLibrary-API">OpenLibrary API<a class="anchor-link" href="#OpenLibrary-API">&#182;</a></h2><p>Since both of these datasets do not contain all of the data we need, we need to find another source of information to fill out details on these books. One such resource we are utilizing is Open Library, which is an open source library....library whose mission is to catalog the world's books, which is super useful for our needs. Therefore, we wrote a few helper methods using the Open Library API to help add standardized information to the data we already have for both tables</p>
+<h2 id="OpenLibrary-API">OpenLibrary API<a class="anchor-link" href="#OpenLibrary-API">&#182;</a></h2><p>Since both of these datasets do not contain all of the data we need, we need to find another source of information to fill out details on these books. One such resource we are utilizing is Open Library, which is an open source library that catalogs the world's books. Therefore, we wrote a few helper methods using the Open Library API to help add standardized information to the data we already have for both tables</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">OL_BASE</span> <span class="o">=</span> <span class="s2">&quot;https://openlibrary.org/api/books&quot;</span>
@@ -13410,7 +13413,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data2.csv&#39;</span><span class="p">)</span>
@@ -13461,7 +13464,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[60]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -13637,7 +13640,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt</span> <span class="o">=</span> <span class="n">finalDataFrame</span>
@@ -13668,7 +13671,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[61]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -13808,7 +13811,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nyt</span><span class="p">[</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;combined-print-and-e-book-fiction&quot;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
@@ -13827,7 +13830,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[62]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -13974,7 +13977,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -14028,7 +14031,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">nyt</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Book_Type&quot;</span><span class="p">):</span>
@@ -14051,7 +14054,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[64]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -14071,7 +14074,7 @@ or combined-print-and-e-book-fiction) </li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can easily see that linear regression more accurately encompasses the fiction correlation, but shows that nonficiton books typically spend more time overall on the bestsellers list. What is important to note is that both see a positive correlation between high rank and number of weeks on the bestsellers list. This can likely be explain as books at a high rank spend a longer time "Working its way down" the list in rank until it is formally removed</p>
+<p>We can easily see that linear regression more accurately encompasses the fiction correlation, but shows that nonficiton books typically spend more time overall on the bestsellers list. What is important to note is that both see a <strong>positive correlation between high rank and number of weeks on the bestsellers list</strong>. This can likely be explain as books at a high rank spend a longer time "Working its way down" the list in rank until it is formally removed</p>
 
 </div>
 </div>
@@ -14086,7 +14089,7 @@ or combined-print-and-e-book-fiction) </li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_g</span> <span class="o">=</span> <span class="n">nyt</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;genres&quot;</span><span class="p">])</span>
@@ -14116,7 +14119,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[65]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -14214,14 +14217,14 @@ or combined-print-and-e-book-fiction) </li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we can see by the length of the DataFrame, Open Library maintains a very...specific palette of genres to choose from.</p>
+<p>As we can see by the length of the DataFrame, Open Library maintains a very specific palette of genres to choose from.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -14237,7 +14240,7 @@ or combined-print-and-e-book-fiction) </li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[66]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -14263,14 +14266,14 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Based on these summary statistics on genre frequency, it's apparent that there are a ton of niche genres that seemingly only appear for one book total, which provides little insight on the dataset as a whole, since a book can adopt multiple genres. For the sake of analysis, we will only keep genres with more than 5 occurences in our dataset.</p>
+<p>Based on these summary statistics on genre frequency, it's apparent that there are many niche genres that seemingly only appear for one book total, which provides little insight on the dataset as a whole, since a book can adopt multiple genres. For the sake of analysis, we will only keep genres with more than 5 occurences in our dataset.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres</span> <span class="o">=</span> <span class="n">genres</span><span class="p">[</span><span class="n">genres</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">]</span>
@@ -14287,7 +14290,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[67]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -14431,7 +14434,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bar</span> <span class="o">=</span> <span class="n">genres</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span><span class="s2">&quot;Genre&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -14468,15 +14471,22 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Based on this plot, it is apparent that, outside of general fiction, books that make the best seller list tend to be biographies and polticial books, dominating the top 5 genres in the list. One could conclude that this is due to people wanting to read about people and topics potentially relavent in their own lives.</p>
-<p>One other thing we can examine is the average page length for a given genre. We can accomplish this with a simple modification for our frequency dictionary. We call an apply on the nyt_g dataframe and accumulate the total page number for each book in that genre</p>
+<p>Based on this plot, it is apparent that, outside of general fiction, <strong>books that make the best seller list tend to be biographies and polticial books</strong>, dominating the top 5 genres in the list. One could conclude that this is due to people wanting to read about people and topics potentially relavent in their own lives.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Page-Count-Analysis">Page Count Analysis<a class="anchor-link" href="#Page-Count-Analysis">&#182;</a></h2><p>One other thing we can examine is the average page length for a given genre. We can accomplish this with a simple modification for our frequency dictionary. We call an apply on the nyt_g dataframe and accumulate the total page number for each book in that genre</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genre_pages</span> <span class="o">=</span> <span class="p">{}</span>
@@ -14506,7 +14516,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[69]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -14612,7 +14622,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres_total</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -14628,7 +14638,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[70]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -14708,7 +14718,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">genres_total</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">);</span>
@@ -14751,7 +14761,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pc</span> <span class="o">=</span> <span class="n">genres_total</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;genre&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">);</span>
@@ -14789,7 +14799,7 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To little surprise New York Times bestselling books on politics, internation studies, and history contribute the highest page counts</p>
+<p>To little surprise New York Times bestselling <strong>books on politics, internation studies</strong>, and <strong>history contribute the highest page counts</strong></p>
 
 </div>
 </div>
@@ -14811,7 +14821,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Forming the column data into a 546x2 matrix</span>
@@ -14858,7 +14868,7 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So, based on the results of this model, it can predict unseen data correctly with between 75-80% accuracy. In the words of a great Chernobyl Engineer: "Not great, not terrible"</p>
+<p>So, based on the results of this model, it can predict unseen data correctly with between 75-80% accuracy.</p>
 
 </div>
 </div>
@@ -14866,7 +14876,7 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Genre-prediction">Genre prediction<a class="anchor-link" href="#Genre-prediction">&#182;</a></h2><p>If you were an aspiring New York Times Best Seller, wouldn't you want to know what genre of book to write to hit your target on the charts? Well given the data we have, we can use a random forest classifier to find out the exact genre to get you where you need to be!</p>
+<h2 id="Genre-prediction">Genre prediction<a class="anchor-link" href="#Genre-prediction">&#182;</a></h2><p>If you were an aspiring New York Times Best Seller, wouldn't you want to know what genre of book to write to get your book on the charts? Well given the data we have, we can use a random forest classifier to find out the exact genre to get you where you need to be!</p>
 <p>Since our genre data comes in the form of an array, we want to extract the most 'popular' (frequently occuring) genre in that list and append a column to each row containing that specific genre. Luckily, we already have a dictionary containing that very information! All we do is select the genre with the highest frequency for each row</p>
 
 </div>
@@ -14874,7 +14884,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">extract_max</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -14899,7 +14909,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[74]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -15052,7 +15062,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">publishers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nyt_g</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Publisher&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -15076,7 +15086,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -15099,7 +15109,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[88]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -15124,7 +15134,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nyt_pop_g</span> <span class="o">=</span> <span class="n">nyt_g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">genre_map</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;max_genre&quot;</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
@@ -15141,7 +15151,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[117]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -15293,7 +15303,7 @@ Name: Count, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[119]:</div>
+<div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfpop</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -15315,7 +15325,7 @@ Name: Count, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[119]:</div>
+    <div class="prompt output_prompt">Out[0]:</div>
 
 
 
@@ -15353,31 +15363,46 @@ Name: Count, dtype: float64</pre>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h3><p>According to <a href="https://www.publishersweekly.com/pw/by-topic/industry-news/publisher-news/article/81473-number-of-self-published-titles-jumped-40-in-2018.html">Publishers Weekly</a> the total number of print and e-books that were self-published in 2018 was <em>1.68 million.</em>
+Of these 1.68 million books, only 15 get chosen as bestsellers each week. One would think that with such a large dataset, every bestseller would be vastly different from each other. However, through our analysis, we were able to see that there are some factors that play into whether your book becomes a bestseller or not.
+There are definite trends seen within the 2018 bestseller data such as -</p>
+<ul>
+<li>Bestsellers tend to be in the following three genres – fiction, biography, and politics</li>
+<li>Bestsellers in the politics, information studies, and history genres have the highest page counts.</li>
+</ul>
+<p>Based on the trends we saw, we continued to see if we could predict whether a book was fiction or not based on its bestseller data.  Once we saw that this classifier was able to get a &gt;75% accuracy, we further looked to see if we could predict the genre of the book based on bestseller information for which we got &gt;65% accuracy.</p>
 
-    </div>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Shortcomings">Shortcomings<a class="anchor-link" href="#Shortcomings">&#182;</a></h3><p>We were limited to using only the data for one year’s worth of bestseller data from the New York Times. This led to our dataset being limited (550 entries). If the scope of this project were broadened, this analysis could be spread out to a longer amount of time, e.g., 3-5 years.</p>
+<p>While the New York Times is a highly regarded source and metric of book popularity, there is no one source that is the end all be all of what book merit or impact. For instance, the list does not take into account what books are being talked about the most on social media or which ones have the most reader generated content (e.g., reviews or fan art).</p>
+<p>Another source that originally considered using and delved into the API was <strong>Goodreads</strong>, a social reading site owned by Amazon that allows readers to follow each other, share reviews, create lists, groups, and communities. However, after cross referencing our information with Goodreads, we found that the data available through their API did not add value within the scope of our project.</p>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Why-should-you-care?">Why should you care?<a class="anchor-link" href="#Why-should-you-care?">&#182;</a></h3><p>As the world becomes more and more built on the internet, print media is becoming obsolete in many ways, as the phrase “adapt or die” comes into play for print newspapers, magazines, books, and other media. Readers also have more and more options for what to read, what format to consume it in, and how much to spend on it. Understanding what factors play into readers’ willingness to actually spend money on a book, then, is paramount for any person in the publishing industry to understand if they want to know what kind of writing to invest in, develop, and release in order to be financially viable.</p>
+<p>Another way that bestseller lists are influential is that they serve as a way for people to understand an aspect of the national consciousness through how people are spending their time and money on one type of media. Therefore, we can discuss questions like: What are people paying attention to? What stories and characters– real or fictional– are we talking about? By considering trends in what books masses of people are buying, we can get an understanding of a part of the cultural backdrop and what is important or interesting to a group of people at a certain time.</p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Thank-you-for-reading!-:)">Thank you for reading! :)<a class="anchor-link" href="#Thank-you-for-reading!-:)">&#182;</a></h1>
+</div>
+</div>
 </div>
     </div>
   </div>
