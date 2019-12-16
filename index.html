@@ -13094,9 +13094,15 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The Association of American Publishers reported that the book industry generated roughly $26.23 billion in revenue through 2.72 billion units in 2017. The Bureau of Labor Statistics estimates that there are just under 146,000 writers and authors working in the United States. While books are communicated through different mediums and marketed different ways, the craft of the written word remains fundamental to culture and communication of society.</p>
-<p>Contents:</p>
+<p>The Association of American Publishers reported that the book industry generated roughly $26.23 billion in revenue through 2.72 billion units in 2017. The Bureau of Labor Statistics estimates that there are just under 146,000 writers and authors working in the United States. Though readers of popular (as opposed to academic) books only reflect part of a population, and while books have shifted to <a href="https://www.nytimes.com/2018/10/29/business/mini-books-pocket-john-green.html">offering more formats</a>, using <a href="https://www.theguardian.com/books/2014/jul/14/david-mitchell-publishes-short-story-twitter">different mediums</a>, and being <a href="https://www.theguardian.com/lifeandstyle/2019/sep/26/bookstagram-books-instagram-influencers-reading">marketed in more novel ways</a>, the craft of the written word remains critical to culture and communication of society.</p>
+<p>What, then, does the current landscape of popular books tell us about what is important to us as a culture today?</p>
+<p>In America, one of the most well known (in industry and for consumers) bookseller metrics is the New York Times (NYT) bestseller list, based on unit sales of both print and e-books. See more detailed metholody <a href="https://www.nytimes.com/books/best-sellers/methodology/">here</a>. This project aims to glean insights from NYT bestselling books list from the year 2018. Some of the questions we are looking to answer include:</p>
 <ul>
+<li>How does genre of a published book relate to its bestseller potential?</li>
+<li>Does the length of a book impact whether or not it is likely to be a bestseller? </li>
+<li>What do these book characteristics tell us about what is appealing to readers?</li>
+</ul>
+<h3 id="Contents:">Contents:<a class="anchor-link" href="#Contents:">&#182;</a></h3><ul>
 <li><a href="#Part-1:-Data-Gathering">1. Data Gathering</a></li>
 <li><a href="#Part-2:-Data-Cleaning-and-Management">2. Data Cleaning and Management</a>  </li>
 <li><a href="#Part-3:-Data-Analysis">3. Data Analysis</a>  </li>
@@ -13970,7 +13976,7 @@ Mounted at drive
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Part-3:-Data-Analysis">Part 3: Data Analysis<a class="anchor-link" href="#Part-3:-Data-Analysis">&#182;</a></h1><p>Now that we have our data gathered, we can start exploring patterns among the books</p>
-<h2 id="Rank-vs-weeks-on-the-list">Rank vs weeks on the list<a class="anchor-link" href="#Rank-vs-weeks-on-the-list">&#182;</a></h2><p>Firstly, we would like to see if there is a noticable parent between the highest rank a book reached during its time on the list and how many weeks it was on the bestsellers list, and we will differentiate between fiction and non-fiction. In order to make the chart more human readable (mitigating the effects of extremes), we will take the average number of weeks for each rank for each type of book.</p>
+<h2 id="Rank-vs-weeks-on-the-list">Rank vs weeks on the list<a class="anchor-link" href="#Rank-vs-weeks-on-the-list">&#182;</a></h2><p>Firstly, we would like to see if there is a noticeable parent between the highest rank a book reached during its time on the list and how many weeks it was on the bestsellers list, and we will differentiate between fiction and non-fiction. In order to make the chart more human readable (mitigating the effects of extremes), we will take the average number of weeks for each rank for each type of book.</p>
 
 </div>
 </div>
@@ -14074,7 +14080,7 @@ Mounted at drive
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can easily see that linear regression more accurately encompasses the fiction correlation, but shows that nonficiton books typically spend more time overall on the bestsellers list. What is important to note is that both see a <strong>positive correlation between high rank and number of weeks on the bestsellers list</strong>. This can likely be explain as books at a high rank spend a longer time "Working its way down" the list in rank until it is formally removed</p>
+<p>We can easily see that linear regression more accurately encompasses the fiction correlation, but shows that nonficiton books typically spend more time overall on the bestsellers list. What is important to note is that both see a <strong>positive correlation between high rank and number of weeks on the bestsellers list</strong>. This might be explained by the fact that books at a high selling rank spend a longer time "Working its way down" the list in rank, until it is formally removed.</p>
 
 </div>
 </div>
@@ -14266,7 +14272,7 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Based on these summary statistics on genre frequency, it's apparent that there are many niche genres that seemingly only appear for one book total, which provides little insight on the dataset as a whole, since a book can adopt multiple genres. For the sake of analysis, we will only keep genres with more than 5 occurences in our dataset.</p>
+<p>Based on these summary statistics on genre frequency, it's apparent that there are many niche genres that seemingly only appear for one book total, which provides little insight on the dataset as a whole, since a book can adopt multiple genres. For the sake of analysis, we will only keep genres with more than 5 occurrences in our dataset.</p>
 
 </div>
 </div>
@@ -14471,7 +14477,7 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Based on this plot, it is apparent that, outside of general fiction, <strong>books that make the best seller list tend to be biographies and polticial books</strong>, dominating the top 5 genres in the list. One could conclude that this is due to people wanting to read about people and topics potentially relavent in their own lives.</p>
+<p>Based on this plot, it is apparent that, outside of general fiction, <strong>books that make the best seller list tend to be biographies and political books</strong>, dominating the top 5 genres in the list. One could conclude that this is due to people wanting to read about people and topics potentially relevant to their own lives, and because politics can be both inflamatory and dramatic, or academic and informative.</p>
 
 </div>
 </div>
@@ -14799,7 +14805,7 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To little surprise New York Times bestselling <strong>books on politics, internation studies</strong>, and <strong>history contribute the highest page counts</strong></p>
+<p>To little surprise New York Times bestselling <strong>books on politics, international studies</strong>, and <strong>history contribute the highest page counts</strong>.</p>
 
 </div>
 </div>
@@ -14877,7 +14883,7 @@ Name: Count, dtype: float64</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Genre-prediction">Genre prediction<a class="anchor-link" href="#Genre-prediction">&#182;</a></h2><p>If you were an aspiring New York Times Best Seller, wouldn't you want to know what genre of book to write to get your book on the charts? Well given the data we have, we can use a random forest classifier to find out the exact genre to get you where you need to be!</p>
-<p>Since our genre data comes in the form of an array, we want to extract the most 'popular' (frequently occuring) genre in that list and append a column to each row containing that specific genre. Luckily, we already have a dictionary containing that very information! All we do is select the genre with the highest frequency for each row</p>
+<p>Since our genre data comes in the form of an array, we want to extract the most 'popular' (frequently occurring) genre in that list and append a column to each row containing that specific genre. Luckily, we already have a dictionary containing that very information! All we do is select the genre with the highest frequency for each row</p>
 
 </div>
 </div>
@@ -15351,10 +15357,9 @@ Name: Count, dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Part-5:-Discussion">Part 5: Discussion<a class="anchor-link" href="#Part-5:-Discussion">&#182;</a></h1><h3 id="Data-Decisions">Data Decisions<a class="anchor-link" href="#Data-Decisions">&#182;</a></h3><p>One of the data complications that we considered involved the discrepancies between ISBN-10 and ISBN-13 values. ISBN stands for International Standard Book Number, which are purchased by publishers from an international agency that makes sure ISBNs are unique. The 10 digit and 13 digit ISBNs serve the same purpose, but the agency decided in 2007 to switch from 10 digit as the standard to 13 digits. Because the New York Times database has newer books, there are fewer books that use an isbn10 number in that dataset. While there is an algorithm that converts older ISBN-10s to ISBN-13s, the publishing sources we researched accept both. Therefore, for this project, our helper function uses both ISBN-13 and ISBN-10.</p>
-<h3 id="Shortcomings">Shortcomings<a class="anchor-link" href="#Shortcomings">&#182;</a></h3><p>We were limited to using only the data for one year’s worth of bestseller data from the New York Times. This led to our dataset being limited (550 entries). If the scope of this project were broadened, this analysis could be spread out to a longer amount of time, e.g., 3-5 years.</p>
-<p>While the New York Times is a highly regarded source and metric of book popularity, there is no one source that is the end all be all of what book merit or impact. For instance, the list does not take into account what books are being talked about the most on social media or which ones have the most reader generated content (e.g., reviews or fan art).</p>
-<p>Another source that originally considered using and delved into the API was <strong>Goodreads</strong>, a social reading site owned by Amazon that allows readers to follow each other, share reviews, create lists, groups, and communities. However, after cross referencing our information with Goodreads, we found that the data available through their API did not add value within the scope of our project.</p>
+<h1 id="Part-5:-Discussion">Part 5: Discussion<a class="anchor-link" href="#Part-5:-Discussion">&#182;</a></h1><h3 id="Complications-and-Shortcomings">Complications and Shortcomings<a class="anchor-link" href="#Complications-and-Shortcomings">&#182;</a></h3><p>One of the data complications that we considered involved the discrepancies between ISBN-10 and ISBN-13 values. ISBN stands for International Standard Book Number, which are purchased by publishers from an international agency that makes sure ISBNs are unique. The 10 digit and 13 digit ISBNs serve the same purpose, but the agency decided in 2007 to switch from 10 digit as the standard to 13 digits. Because the New York Times database has newer books, there are fewer books that use an isbn10 number in that dataset. While there is an algorithm that converts older ISBN-10s to ISBN-13s, the publishing sources we researched accept both. Therefore, for this project, our helper function uses both ISBN-13 and ISBN-10.</p>
+<p>We scoped out this project to study only the data from one year’s worth of NYT bestseller data. As such, our dataset was capped to 550 entries. If the scope of this project were broadened and we wanted to expand our analysis, this analysis could be spread out to a longer amount of time, e.g., 3-5 years.</p>
+<p>While the New York Times is one of the most highly regarded sources of book popularity, there is no one source that is the end all be all of what book merit or impact. For instance, the list does not take into account what books are being talked about the most on social media or which ones have the most reader generated content (e.g., reviews or fan art). Another source that originally considered using and delved into the API was <strong>Goodreads</strong>, a social reading site owned by Amazon that allows readers to follow each other, share reviews, create lists, groups, and communities. However, after cross referencing our information with Goodreads, we found that the data available through their API did not add value within the scope of our project.</p>
 <h3 id="Further-Reading">Further Reading<a class="anchor-link" href="#Further-Reading">&#182;</a></h3><p>To learn more about the ins and outs of a bestsller:</p>
 <ul>
 <li><a href="https://www.huffpost.com/entry/the-writers-odds-of-succe_b_2806611">HuffPost: The Writer's Odds of Success</a></li>
@@ -15409,7 +15414,7 @@ There are definite trends seen within the 2018 bestseller data such as -</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Thank-you-for-reading!-:)">Thank you for reading! :)<a class="anchor-link" href="#Thank-you-for-reading!-:)">&#182;</a></h1>
+<h1 id="Thank-you-for-reading!-:)-&#128218;">Thank you for reading! :) &#128218;<a class="anchor-link" href="#Thank-you-for-reading!-:)-&#128218;">&#182;</a></h1>
 </div>
 </div>
 </div>
