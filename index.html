@@ -13155,8 +13155,6 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">google.colab</span> <span class="k">import</span> <span class="n">drive</span>
-<span class="kn">from</span> <span class="nn">google.colab</span> <span class="k">import</span> <span class="n">files</span>
 </pre></div>
 
     </div>
@@ -13220,10 +13218,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[0]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Mounting google drive to google collaboratory and exporting the pandas dataframe to google drive as a .csv file </span>
-<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;drive&#39;</span><span class="p">)</span>
-<span class="n">finalDataFrame</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data2.csv&#39;</span><span class="p">)</span>
-<span class="o">!</span>cp data2.csv drive/My<span class="se">\ </span>Drive/
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">finalDataFrame</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data2.csv&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13245,56 +13240,6 @@ div#notebook {
 Enter your authorization code:
 ··········
 Mounted at drive
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[0]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#uploading the csv file to google colab </span>
-<span class="n">uploaded</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">upload</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-
-     <input type="file" id="files-6c51f34d-3a89-4fa4-9835-a4254e4a50c0" name="files[]" multiple disabled />
-     <output id="result-6c51f34d-3a89-4fa4-9835-a4254e4a50c0">
-      Upload widget is only available when the cell has been executed in the
-      current browser session. Please rerun this cell to enable.
-      </output>
-      <script src="/nbextensions/google.colab/files.js"></script> 
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Saving data2.csv to data2 (1).csv
 </pre>
 </div>
 </div>
